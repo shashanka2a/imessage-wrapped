@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 Wrapped: Shashank & Quang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --g-blue: #1A73E8;
+            --g-red: #D93025;
+            --g-yellow: #F9AB00;
+            --g-green: #1E8E3E;
+            --bg-dark: #0F0F0F;
+        }
+
+        body {
+            font-family: 'Google Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: white;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .story-container {
+            width: 100%;
+            max-width: 450px;
+            height: 85vh;
+            position: relative;
+            background: #000;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 48px 32px;
+            opacity: 0;
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 2;
+        }
+
+        .progress-container {
+            position: absolute;
+            top: 20px;
+            left: 16px;
+            right: 16px;
+            display: flex;
+            gap: 6px;
+            z-index: 10;
+        }
+
+        .progress-bar {
+            height: 2px;
+            background: rgba(255,255,255,0.15);
+            flex-grow: 1;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #fff;
+            width: 0%;
+            border-radius: 4px;
+        }
+
+        /* Elevated Gradient Palette */
+        .bg-gradient-1 { background: linear-gradient(165deg, #174EA6 0%, #1A73E8 100%); } 
+        .bg-gradient-2 { background: linear-gradient(165deg, #A50E0E 0%, #D93025 100%); } 
+        .bg-gradient-3 { background: linear-gradient(165deg, #0D652D 0%, #1E8E3E 100%); } 
+        .bg-gradient-4 { background: linear-gradient(165deg, #F9AB00 0%, #FBBC04 100%); } 
+        .bg-gradient-5 { background: linear-gradient(165deg, #1E8E3E 0%, #174EA6 100%); } 
+        .bg-summary { background: #FFFFFF; color: #000000; }
+
+        .btn-nav {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 45%;
+            z-index: 5;
+            cursor: pointer;
+        }
+
+        .btn-left { left: 0; }
+        .btn-right { right: 0; }
+
+        @keyframes revealUp {
+            0% { transform: translateY(24px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .animate-reveal { animation: revealUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .delay-1 { animation-delay: 0.15s; }
+        .delay-2 { animation-delay: 0.3s; }
+        .delay-3 { animation-delay: 0.45s; }
+
+        .big-number {
+            font-size: 5rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+            line-height: 0.9;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0;
+            border-bottom: 1px solid #EEEEEE;
+        }
+        
+        .summary-item:last-of-type {
+            border-bottom: none;
+        }
+
+        .replay-btn {
+            width: 100%;
+            padding: 20px;
+            background: #000000;
+            color: #FFFFFF;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            transition: transform 0.1s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .replay-btn:active {
+            transform: scale(0.97);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="story-container" id="story">
+        <div class="progress-container" id="progressContainer"></div>
+
+        <div class="btn-nav btn-left" onclick="prevSlide()"></div>
+        <div class="btn-nav btn-right" onclick="nextSlide()"></div>
+
+        <!-- SLIDE 1: INTRO -->
+        <div class="slide active bg-gradient-1 flex items-center justify-center text-center">
+            <h2 class="text-sm uppercase tracking-[0.2em] font-bold mb-4 opacity-0 animate-reveal">2025 Retrospective</h2>
+            <h1 class="text-7xl font-bold opacity-0 animate-reveal delay-1">Wrapped</h1>
+            <div class="mt-12 h-px w-12 bg-white/40 opacity-0 animate-reveal delay-2"></div>
+            <p class="mt-6 text-xl font-medium opacity-0 animate-reveal delay-2">Shashank & Quang Tran</p>
+        </div>
+
+        <!-- SLIDE 2: VOLUME -->
+        <div class="slide bg-gradient-2">
+            <p class="text-xl font-medium opacity-0 animate-reveal">A 104-day journey...</p>
+            <div class="mt-16">
+                <div class="big-number opacity-0 animate-reveal delay-1" id="msgCounter">0</div>
+                <p class="text-2xl font-bold mt-4 opacity-0 animate-reveal delay-2">Total Messages</p>
+            </div>
+            <div class="mt-auto p-6 bg-white/10 rounded-3xl border border-white/10 backdrop-blur-xl opacity-0 animate-reveal delay-3">
+                <p class="text-lg leading-relaxed">Response time: <span class="font-bold">33.5m</span> on average. You stayed connected.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: TIMING & PEAK HOURS -->
+        <div class="slide bg-gradient-3">
+            <h2 class="text-3xl font-bold mb-4 opacity-0 animate-reveal">Prime Time</h2>
+            <p class="text-lg opacity-80 opacity-0 animate-reveal delay-1">The conversation peaked at</p>
+            <div class="mt-6">
+                <div class="text-7xl font-bold opacity-0 animate-reveal delay-2">7 PM</div>
+                <p class="text-2xl font-bold mt-2 opacity-0 animate-reveal delay-2">Every Thursday</p>
+            </div>
+            <div class="mt-auto flex items-center gap-4 opacity-0 animate-reveal delay-3">
+                <div class="text-4xl">⏰</div>
+                <p class="text-lg leading-tight">Whether it was catching up or winding down, 7 PM was yours.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: THE DIGITAL CURATORS (LINKS) -->
+        <div class="slide bg-gradient-4 text-black">
+            <h2 class="text-3xl font-bold mb-2 opacity-0 animate-reveal">Digital Curators</h2>
+            <p class="text-lg font-medium opacity-70 opacity-0 animate-reveal delay-1">You shared a lot of links...</p>
+            <div class="mt-12">
+                <div class="big-number opacity-0 animate-reveal delay-2">304</div>
+                <p class="text-xl font-bold mt-2 opacity-0 animate-reveal delay-2">Total links shared</p>
+            </div>
+            <div class="mt-12 space-y-4 opacity-0 animate-reveal delay-3">
+                <div class="flex justify-between items-center p-4 bg-black/5 rounded-2xl">
+                    <span class="font-bold">Quang Tran</span>
+                    <span class="text-xl font-bold">158</span>
+                </div>
+                <div class="flex justify-between items-center p-4 bg-black/5 rounded-2xl">
+                    <span class="font-bold">Shashank</span>
+                    <span class="text-xl font-bold">146</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: BALANCE & SYNC -->
+        <div class="slide bg-gradient-5">
+            <h2 class="text-3xl font-bold mb-12 opacity-0 animate-reveal">Perfectly In-Sync</h2>
+            <div class="space-y-10">
+                <div class="opacity-0 animate-reveal delay-1">
+                    <div class="flex justify-between items-end mb-3">
+                        <span class="text-lg font-medium">Shashank</span>
+                        <span class="text-3xl font-bold">50.8%</span>
+                    </div>
+                    <div class="h-3 w-full bg-white/20 rounded-full overflow-hidden">
+                        <div class="h-full bg-white transition-all duration-1000" style="width: 50.8%"></div>
+                    </div>
+                </div>
+                <div class="opacity-0 animate-reveal delay-2">
+                    <div class="flex justify-between items-end mb-3">
+                        <span class="text-lg font-medium">Quang Tran</span>
+                        <span class="text-3xl font-bold">49.2%</span>
+                    </div>
+                    <div class="h-3 w-full bg-white/20 rounded-full overflow-hidden">
+                        <div class="h-full bg-white/60 transition-all duration-1000" style="width: 49.2%"></div>
+                    </div>
+                </div>
+            </div>
+            <p class="mt-auto text-lg opacity-80 opacity-0 animate-reveal delay-3">
+                A conversation that flows both ways, nearly down to the decimal.
+            </p>
+        </div>
+
+        <!-- SLIDE 6: FINAL SUMMARY -->
+        <div class="slide bg-summary">
+            <div class="flex flex-col h-full opacity-0 animate-reveal">
+                <div class="flex justify-between items-start mb-10">
+                    <div>
+                        <h2 class="text-3xl font-bold tracking-tighter">Your 2025<br>Wrapped</h2>
+                        <p class="text-sm text-gray-500 mt-1">Shashank & Quang</p>
+                    </div>
+                    <div class="px-3 py-1 bg-black text-white rounded-full text-[9px] font-bold tracking-widest uppercase">IMESSAGE</div>
+                </div>
+
+                <div class="flex-grow space-y-2">
+                    <div class="summary-item">
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Total Messages</span>
+                        <span class="text-2xl font-bold">1,420</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Digital Links</span>
+                        <span class="text-2xl font-bold">304</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Prime Time</span>
+                        <span class="text-2xl font-bold">7 PM</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Peak Day</span>
+                        <span class="text-2xl font-bold">Sept 25</span>
+                    </div>
+                </div>
+
+                <div class="mt-auto">
+                    <button onclick="location.reload()" class="replay-btn">
+                        Replay Story
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const progressContainer = document.getElementById('progressContainer');
+        let currentSlide = 0;
+        let slideRequest;
+        let startTime;
+        const SLIDE_DURATION = 5000; 
+
+        // Initialize progress bars
+        slides.forEach((_, i) => {
+            const bar = document.createElement('div');
+            bar.className = 'progress-bar';
+            bar.innerHTML = `<div class="progress-fill" id="fill-${i}"></div>`;
+            progressContainer.appendChild(bar);
+        });
+
+        function showSlide(index) {
+            if (slideRequest) cancelAnimationFrame(slideRequest);
+            currentSlide = index;
+
+            slides.forEach((s, i) => {
+                s.classList.remove('active');
+                const fill = document.getElementById(`fill-${i}`);
+                if (i < index) fill.style.width = '100%';
+                else fill.style.width = '0%';
+            });
+
+            // Trigger reflow
+            slides[index].style.display = 'none';
+            slides[index].offsetHeight;
+            slides[index].style.display = 'flex';
+            slides[index].classList.add('active');
+            
+            if (index === 1) animateValue("msgCounter", 0, 1420, 1200);
+
+            startTime = performance.now();
+            animateProgress();
+        }
+
+        function animateProgress() {
+            const now = performance.now();
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / SLIDE_DURATION, 1);
+            
+            const currentFill = document.getElementById(`fill-${currentSlide}`);
+            if (currentFill) currentFill.style.width = (progress * 100) + '%';
+
+            if (progress < 1) slideRequest = requestAnimationFrame(animateProgress);
+            else nextSlide();
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) showSlide(currentSlide + 1);
+            else {
+                const finalFill = document.getElementById(`fill-${slides.length - 1}`);
+                if (finalFill) finalFill.style.width = '100%';
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) showSlide(currentSlide - 1);
+            else showSlide(0);
+        }
+
+        function animateValue(id, start, end, duration) {
+            const obj = document.getElementById(id);
+            if (!obj) return;
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString();
+                if (progress < 1) window.requestAnimationFrame(step);
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        window.onload = () => showSlide(0);
+    </script>
+</body>
+</html>
